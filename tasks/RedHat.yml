@@ -1,0 +1,23 @@
+---
+- name: Install Chronos
+  yum: name=chronos-{{chronos_version}} state=present
+  notify: restart chronos
+
+- name: Create chronos conf directory
+  file: dest=/etc/chronos/conf state=directory mode=0755
+
+- name: Set chronos conf http_port
+  copy: content="{{chronos_http_port}}" dest=/etc/chronos/conf/http_port
+  notify: restart chronos
+
+- name: Set chronos conf https_port
+  copy: content="{{chronos_https_port}}" dest=/etc/chronos/conf/https_port
+  notify: restart chronos
+
+- name: Set chronos conf master
+  copy: content="{{chronos_runtime_master}}" dest=/etc/chronos/conf/master
+  notify: restart chronos
+
+- name: Set chronos conf zk_hosts
+  copy: content="{{ chronos_runtime_zookeeper_hosts }}" dest=/etc/chronos/conf/zk_hosts
+  notify: restart chronos

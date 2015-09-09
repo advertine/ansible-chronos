@@ -1,7 +1,6 @@
 ---
-- include: common.yml
+- name: "Assert os family is  RedHat (only currently supported)"
+  assert: { that: "ansible_os_family == 'RedHat'" }
 
-- include: Debian.yml
-  when: ansible_os_family == "Debian"
-
-- include: deploy.yml
+- include: RedHat.yml
+  when: ansible_os_family == "RedHat"
